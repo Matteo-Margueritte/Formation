@@ -27,18 +27,18 @@ defmodule Server.Router do
     send_resp(conn, 404, "Go away you are not welcome here")
   end
 
-  ## Server with custom plug router
+##  Server with custom plug router
 
-  #  use Server.TheCreator
-  #
-  #  my_get "/hello" do
-  #    {200, "Ok"}
-  #  end
-  #
-  #  my_get "/" do
-  #    {200, "Home"}
-  #  end
-  #
-  #  my_error code: 400, content: "Custom error message"
+   # use Server.TheCreator
+
+   # my_get "/hello" do
+   #   {200, "Ok"}
+   # end
+
+   # my_get "/" do
+   #   {200, "Home"}
+   # end
+
+   # my_error code: 400, content: "Custom error message"
 
 end

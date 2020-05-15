@@ -14,6 +14,10 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "create-react-class": "^15.6.3",
-    "jsx": "^0.9.89"
+    "css-loader": "^3.5.3",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^6.0.0",
+    "jsx": "^0.9.89",
+    "path": "^0.12.7"
   }
 }

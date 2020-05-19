@@ -3,7 +3,7 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="JSX" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Elixir 1.7.4" project-jdk-type="Elixir SDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="Unknown Elixir version at /home/matteom/.asdf/installs/elixir/1.7.4" project-jdk-type="Elixir SDK">
     <output url="file://$PROJECT_DIR$/classes" />
   </component>
 </project>

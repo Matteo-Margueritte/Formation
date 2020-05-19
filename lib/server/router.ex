@@ -1,6 +1,8 @@
 defmodule Server.Router do
   use Plug.Router
 
+  plug Plug.Static, from: "lib/priv/static", at: "/static"
+
   plug :match
   plug(Plug.Parsers, parsers: [:json], json_decoder: Poison)
   plug :dispatch
@@ -23,9 +25,11 @@ defmodule Server.Router do
     send_resp(conn, 200, "I am The First, The One, Le Geant Plug Vert, Le Grand Plug, Le Plug Cosmique.")
   end
 
-  match _ do
-    send_resp(conn, 404, "Go away you are not welcome here")
-  end
+  get _, do: send_file(conn, 200, "lib/priv/static/index.html")
+
+  #  match _ do
+  #    send_resp(conn, 404, "Go away you are not welcome here")
+  #end
 
 ##  Server with custom plug router
 

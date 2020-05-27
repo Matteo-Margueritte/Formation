@@ -7,18 +7,28 @@ defmodule Server.Router do
   plug(Plug.Parsers, parsers: [:json], json_decoder: Poison)
   plug :dispatch
 
-  get "/search" do
-    IO.inspect Map.to_list(conn.params)
+  get "/api/order/:remoteid" do
     {status, body} = Server.Database.search(Server.Database, Map.to_list(conn.params))
-                     |> IO.inspect
                      |> case do
-                          [result]-> case Poison.encode(result) do
-                                    {:ok, res} -> {200, res}
-                                    _ -> {500, "Une erreur est survenue"}
-                                  end
-                          _ -> {404, "No result found"}
+                          [result]-> {200, Poison.encode!(result)}
+                          _ -> {404, Poison.encode!(%{"code" => 404, "message" => "Not result found"})}
                         end
     send_resp(conn, status, body)
+  end
+
+  get "/api/orders" do
+    %{"page" => page} = conn.params |> IO.inspect
+    body = GenServer.call(Server.Database, {:page, 10, String.to_integer(conn.params["page"]) * 10})
+                     |> Poison.encode!
+#                     |> case do
+#                          result -> Poison.encode!(result)
+#                                    |> case do
+#                                         {:ok, res} -> {200, res}
+#                                         {_, msg} -> IO.inspect(msg)
+#                                       end
+#                          _ -> {404, Poison.encode!(%{"code" => 404, "message" => "Not result found"})} |> IO.inspect
+#                        end
+    send_resp(conn, 200, body)
   end
 
   get "/me" do
@@ -26,23 +36,4 @@ defmodule Server.Router do
   end
 
   get _, do: send_file(conn, 200, "lib/priv/static/index.html")
-
-  #  match _ do
-  #    send_resp(conn, 404, "Go away you are not welcome here")
-  #end
-
-##  Server with custom plug router
-
-   # use Server.TheCreator
-
-   # my_get "/hello" do
-   #   {200, "Ok"}
-   # end
-
-   # my_get "/" do
-   #   {200, "Home"}
-   # end
-
-   # my_error code: 400, content: "Custom error message"
-
 end

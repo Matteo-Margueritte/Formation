@@ -46,6 +46,8 @@ kbrw_stack-*.tar
 
 /lib/priv
 
+./orders_chunk0.json
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

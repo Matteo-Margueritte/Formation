@@ -5,7 +5,7 @@ defmodule JsonLoader do
     |> File.read!
     |> Poison.decode!
     |> Enum.map(fn order ->
-      GenServer.cast(database, {:create, order["id"], order})
+      GenServer.call(database, {:create, order["remoteid"], order})
     end)
   end
 end

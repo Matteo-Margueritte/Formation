@@ -1,4 +1,4 @@
-/* Generated on: Wed May 27 2020 15:38:48 GMT+0000 (Coordinated Universal Time) */
+/* Generated on: Fri May 29 2020 11:07:44 GMT+0000 (Coordinated Universal Time) */
 /* ==========================================================================
    normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css 
    ========================================================================== */
@@ -904,6 +904,7 @@
 }
 
 .confirmation-wrapper.hidden {
+  position: fixed;
   display: none;
 }
 
@@ -962,6 +963,62 @@
 
 .confirmation-modal-no {
   background-color: #e50000;
+}
+
+.loader-wrapper {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  right: auto;
+  bottom: auto;
+  z-index: 1000;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: rgba(63, 63, 63, 0.66);
+}
+
+.loader-wrapper.hidden {
+  position: fixed;
+  display: none;
+}
+
+.loader-content {
+  position: fixed;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: rgba(63, 63, 63, 0.65);
+}
+
+.image {
+  background-color: #7f7f7f;
+  opacity: 1;
 }
 
 @media screen and (max-width: 991px) {

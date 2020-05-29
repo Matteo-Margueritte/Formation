@@ -72,7 +72,6 @@ defmodule Server.Database do
   def search(database, criteria) do
     criteria |> Enum.map(fn criteria ->
       {key, keyvalue} = criteria
-                        |> IO.inspect
       if key == "remoteid" do
         GenServer.call(database, {:read, keyvalue})
       end

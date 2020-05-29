@@ -16,18 +16,16 @@ defmodule Server.Router do
     send_resp(conn, status, body)
   end
 
+  delete "/api/order/:remoteid" do
+    :timer.sleep(3000)
+    GenServer.cast(Server.Database, {:delete, remoteid}) |> IO.inspect
+    send_resp(conn, 204, Poison.encode!(%{"code" => 204, "message" => "Order #{:remoteid} successfully deleted"}))
+  end
+
   get "/api/orders" do
-    %{"page" => page} = conn.params |> IO.inspect
-    body = GenServer.call(Server.Database, {:page, 10, String.to_integer(conn.params["page"]) * 10})
-                     |> Poison.encode!
-#                     |> case do
-#                          result -> Poison.encode!(result)
-#                                    |> case do
-#                                         {:ok, res} -> {200, res}
-#                                         {_, msg} -> IO.inspect(msg)
-#                                       end
-#                          _ -> {404, Poison.encode!(%{"code" => 404, "message" => "Not result found"})} |> IO.inspect
-#                        end
+    %{"page" => page} = conn.params
+    body = GenServer.call(Server.Database, {:page, 10, String.to_integer(page) * 10})
+           |> Poison.encode!
     send_resp(conn, 200, body)
   end
 

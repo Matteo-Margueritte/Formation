@@ -1,4 +1,4 @@
-/* Generated on: Fri May 29 2020 11:07:44 GMT+0000 (Coordinated Universal Time) */
+/* Generated on: Wed Jun 03 2020 12:50:17 GMT+0000 (Coordinated Universal Time) */
 /* ==========================================================================
    normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css 
    ========================================================================== */
@@ -243,7 +243,7 @@
   grid-template-rows: auto auto;
 }
 
-.form {
+.homesearchform {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -267,7 +267,7 @@
   align-items: center;
 }
 
-.text-field {
+.homesearchfield {
   width: 30%;
   margin-right: 14px;
   margin-bottom: 0px;

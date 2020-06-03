@@ -1,11 +1,14 @@
 defmodule JsonLoader do
 
-  def load_to_database(database, json_file) do
+  def upload_order(order) do
+    Server.Riak.create_object("orders", order["id"], order)
+  end
+
+  def load_to_database(json_file) do
     json_file
     |> File.read!
     |> Poison.decode!
-    |> Enum.map(fn order ->
-      GenServer.call(database, {:create, order["remoteid"], order})
-    end)
+    |> Task.async_stream(&JsonLoader.upload_order/1, max_concurrency: 10)
+    |> Stream.run
   end
 end

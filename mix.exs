@@ -14,7 +14,7 @@ defmodule KbrwStack.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :cowboy],
+    [applications: [:logger, :cowboy, :inets],
      mod: {KbrwStack, []}]
   end
 

@@ -8,7 +8,8 @@ use Application
     Supervisor.which_children(super_pid)
 #    [{_, child_pid, _, _}] = Supervisor.which_children(super_pid)
 
-    JsonLoader.load_to_database(Server.Database, "orders_chunk0.json")
+
+
     {:ok, super_pid}
   end
 

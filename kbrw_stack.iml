@@ -9,16 +9,20 @@
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/cowboy" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/cowlib" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/exos" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/mime" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/plug" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/poison" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/poolboy" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ranch" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/reaxt" />
       <excludeFolder url="file://$MODULE_DIR$/assets/node_modules/phoenix" />
       <excludeFolder url="file://$MODULE_DIR$/assets/node_modules/phoenix_html" />
       <excludeFolder url="file://$MODULE_DIR$/cover" />
       <excludeFolder url="file://$MODULE_DIR$/deps" />
       <excludeFolder url="file://$MODULE_DIR$/doc" />
       <excludeFolder url="file://$MODULE_DIR$/logs" />
+      <excludeFolder url="file://$MODULE_DIR$/web/node_modules" />
     </content>
     <orderEntry type="jdk" jdkName="Unknown Elixir version at /home/matteom/.asdf/installs/elixir/1.7.4" jdkType="Elixir SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -39,5 +43,8 @@
     <orderEntry type="library" name="xhr2" level="project" />
     <orderEntry type="library" name="cookie" level="project" />
     <orderEntry type="library" name="qs" level="project" />
+    <orderEntry type="library" name="reaxt" level="project" />
+    <orderEntry type="library" name="exos" level="project" />
+    <orderEntry type="library" name="poolboy" level="project" />
   </component>
 </module>

@@ -8,6 +8,13 @@ use Mix.Config
 # if you want to provide default values for your application for
 # 3rd-party users, it should be done in your "mix.exs" file.
 
+config :reaxt, [
+  otp_app: :kbrwstack,
+  hot: false,
+  pool_size: 3,
+  global_config: %{}
+]
+
 # You can configure for your application as:
 #
 #     config :kbrw_stack, key: :value

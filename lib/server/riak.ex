@@ -45,7 +45,7 @@ defmodule Server.Riak do
 
   def upload_schema(schema, schema_path) do
     {:ok, {{'HTTP/1.1', 204, 'No Content'}, _headers, _body}} =
-      :httpc.request(:put, {'http://127.0.0.1:8098/search/schema/#{schema}', [], 'application/xml', IO.binread(File.open!(schema_path), :all)}, [], [])
+      :httpc.request(:put, {'http://127.0.0.1:8098/search/schema/#{schema}', [], 'application/xml', IO.binread(File.open!(schema_path), :all)}, [{:timeout, 1000}], [])
   end
 
   def create_index(index, schema) do

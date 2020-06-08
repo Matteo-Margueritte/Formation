@@ -7,6 +7,7 @@ defmodule KbrwStack.Mixfile do
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+      compilers: [:reaxt_webpack] ++ Mix.compilers,
      deps: deps()]
   end
 
@@ -14,7 +15,7 @@ defmodule KbrwStack.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :cowboy, :inets],
+    [applications: [:logger, :cowboy, :inets, :reaxt],
      mod: {KbrwStack, []}]
   end
 
@@ -29,9 +30,10 @@ defmodule KbrwStack.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:cowboy, "~> 1.1.2"},
+      {:reaxt, "~> 2.0", github: "kbrw/reaxt"},
+      {:cowboy, "~> 1.0.0"},
       {:plug, "~> 1.3.4"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 2.1"}
     ]
   end
 end

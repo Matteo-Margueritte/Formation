@@ -1,11 +1,14 @@
 defmodule Server.Router do
   use Plug.Router
+  require EEx
 
-  plug Plug.Static, from: "lib/priv/static", at: "/static"
+  plug Plug.Static, from: "priv/static", at: "/public"
 
   plug :match
   plug(Plug.Parsers, parsers: [:json], json_decoder: Poison)
   plug :dispatch
+
+  EEx.function_from_file :defp, :layout, "web/layout.html.eex", [:render]
 
   get "/api/order/:remoteid" do
     {_,{_,_,body}} = Server.Riak.get_object("orders", remoteid)
@@ -21,6 +24,7 @@ defmodule Server.Router do
   @defaults %{"page" => "1", "rows" => "30", "sort" => "creation_date_index"}
   get "/api/orders" do
     %{"page" => page, "rows" => rows, "q" => query, "sort" => sort} = Map.merge(@defaults, conn.params)
+    IO.inspect(conn.params)
     case Server.Riak.search("orders", query, page, rows, sort) do
       {:ok, body} ->
         res = Task.async_stream(body["response"]["docs"], &Server.Riak.get_json_object/1, max_concurrency: 10)
@@ -30,9 +34,9 @@ defmodule Server.Router do
     end
   end
 
-  get "/me" do
-    send_resp(conn, 200, "I am The First, The One, Le Geant Plug Vert, Le Grand Plug, Le Plug Cosmique.")
+  get _ do
+    conn = fetch_query_params(conn)
+    render = Reaxt.render!(:app, %{path: conn.request_path, cookies: conn.cookies, query: conn.params},30_000)
+    send_resp(put_resp_header(conn,"content-type","text/html;charset=utf-8"), render.param || 200,layout(render))
   end
-
-  get _, do: send_file(conn, 200, "lib/priv/static/index.html")
 end

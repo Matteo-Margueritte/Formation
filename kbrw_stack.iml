@@ -46,5 +46,7 @@
     <orderEntry type="library" name="reaxt" level="project" />
     <orderEntry type="library" name="exos" level="project" />
     <orderEntry type="library" name="poolboy" level="project" />
+    <orderEntry type="library" name="rulex" level="project" />
+    <orderEntry type="library" name="exfsm" level="project" />
   </component>
 </module>

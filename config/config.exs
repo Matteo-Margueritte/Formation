@@ -9,8 +9,8 @@ use Mix.Config
 # 3rd-party users, it should be done in your "mix.exs" file.
 
 config :reaxt, [
-  otp_app: :kbrwstack,
-  hot: false,
+  otp_app: :kbrw_stack,
+  hot: true,
   pool_size: 3,
   global_config: %{}
 ]

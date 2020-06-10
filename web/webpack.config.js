@@ -1,7 +1,8 @@
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var path = require('path')
+var webpack = require('webpack')
 
-client_config = {
+const client_config = {
     devtool: 'source-map',
     //>>> entry: './app.js',
     entry: "reaxt/client_entry_addition",
@@ -38,7 +39,7 @@ client_config = {
     },
 }
 
-var server_config = Object.assign(Object.assign({},client_config),{
+const server_config = Object.assign(Object.assign({},client_config),{
     target: "node",
     entry: "reaxt/react_server",
     output: {

@@ -8,6 +8,7 @@ export var HTTP = new (function(){
 
     this.req = (method,url,data)=> new Promise((resolve, reject) => {
         var req = new XMLHttpRequest()
+        url = (typeof window !== 'undefined') ? url : localhost+url
         req.open(method, url)
         req.responseType = "text"
         req.setRequestHeader("accept","application/json,*/*;0.8")

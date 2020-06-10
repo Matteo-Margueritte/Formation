@@ -30,7 +30,9 @@ defmodule KbrwStack.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:reaxt, "~> 2.0", github: "kbrw/reaxt"},
+      {:reaxt, "~> 3.0.0", github: "kbrw/reaxt"},
+      {:rulex, git: "https://github.com/kbrw/rulex.git"},
+      {:exfsm, git: "https://github.com/kbrw/exfsm.git"},
       {:cowboy, "~> 1.0.0"},
       {:plug, "~> 1.3.4"},
       {:poison, "~> 2.1"}

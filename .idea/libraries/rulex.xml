@@ -1,7 +1,11 @@
 <component name="libraryTable">
   <library name="rulex" type="mix">
-    <CLASSES />
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/rulex/ebin" />
+    </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/rulex/lib" />
+    </SOURCES>
   </library>
 </component>

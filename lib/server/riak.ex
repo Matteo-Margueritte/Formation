@@ -12,13 +12,17 @@ defmodule Server.Riak do
   end
 
   def get_object(bucket, key) do
-    {:ok, {{'HTTP/1.1', 200, 'OK'}, headers, body}} =
+    {_, {{_, status, _}, headers, body}} =
       :httpc.request(:get, {'http://127.0.0.1:8098/buckets/#{bucket}/keys/#{key}', []}, [], [])
+    cond do
+      status === 200 -> body
+      true -> nil
+    end
   end
 
   def get_json_object(key) do
     [head | _] = key["id"]
-    {:ok,{_,_,body}} = get_object("orders", head)
+    body = get_object("orders", head)
     Poison.decode!(body)
   end
 
@@ -33,8 +37,12 @@ defmodule Server.Riak do
   end
 
   def delete_object(bucket, key) do
-    {:ok, {{'HTTP/1.1', 204, 'No Content'}, _headers, _body}} =
+    {_, {{_, status, _}, _headers, _body}} =
       :httpc.request(:delete, {'http://127.0.0.1:8098/buckets/#{bucket}/keys/#{key}', []}, [], [])
+    cond do
+      status === 204 -> true
+      true -> false
+    end
   end
 
   def delete_bucket(bucket) do

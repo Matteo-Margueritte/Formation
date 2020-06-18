@@ -12,23 +12,9 @@ import {addRemoteProps} from "./remote_props";
 /* required css for our application */
 require('../webflow/orders.css');
 
-// var GoTo = (route, params, query) => {
-//     var qs = Qs.stringify(query)
-//     var url = routes[route].path(params) + ((qs == '') ? '' : ('?' + qs))
-//     history.pushState({}, "", url)
-//     onPathChange()
-// }
-
 var propsToReload = []
 
-var ReloadProps = (propsList, query = {}) => {
-    propsToReload = propsToReload.concat(propsList)
-    onPathChange(query)
-}
-
 var browserState = {
-    // goTo: GoTo,
-    reloadProps: ReloadProps
 }
 
 var ErrorPage = createReactClass({
@@ -38,14 +24,6 @@ var ErrorPage = createReactClass({
 })
 
 var routes = {
-    "orders": {
-        path: (params) => {
-            return "/";
-        },
-        match: (path, qs) => {
-            return (path == "/") && {handlerPath: [Layout, Header, Orders]}
-        }
-    },
     "order": {
         path: (params) => {
             return "/order/" + params;
@@ -53,6 +31,14 @@ var routes = {
         match: (path, qs) => {
             var r = new RegExp("/order/([^/]*)$").exec(path)
             return r && {handlerPath: [Layout, Header, Order, OrderDetail], order_id: r[1]}
+        }
+    },
+    "orders": {
+        path: (params) => {
+            return "/";
+        },
+        match: (path, qs) => {
+            return {handlerPath: [Layout, Header, Orders]}
         }
     }
 }
@@ -108,9 +94,15 @@ var Link = createReactClass({
             var path = routes[route].path(params)
             var qs = Qs.stringify(query)
             var url = path + (qs == '' ? '' : '?' + qs)
+            console.error(url)
             history.pushState({},"",url)
             Link.onPathChange()
         },
+        ReloadProps(propsList) {
+            propsToReload = propsToReload.concat(propsList)
+            this.onPathChange()
+        },
+
         onPathChange(){ //Updated onPathChange
             var path = location.pathname
             var qs = Qs.parse(location.search.slice(1))

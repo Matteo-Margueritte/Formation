@@ -11,8 +11,15 @@ defmodule Server.Router do
   EEx.function_from_file :defp, :layout, "web/layout.html.eex", [:render]
 
   get "/api/order/:remoteid" do
-    {_,{_,_,body}} = Server.Riak.get_object("orders", remoteid)
+    {:ok,{_,_,body}} = Server.Riak.get_object("orders", remoteid)
     send_resp(conn, 200, Poison.encode!(Poison.decode!(body)))
+  end
+
+  post "/api/order/process/:action" do
+    case Server.Supervisor.handle_order(conn.body_params, action) do
+      {:ok, res} -> send_resp(conn, 200, Poison.encode!(res))
+      {:error, res} -> send_resp(conn, 400, Poison.encode!(%{"message" => res}))
+    end
   end
 
   delete "/api/order/:remoteid" do
@@ -23,6 +30,7 @@ defmodule Server.Router do
 
   @defaults %{"page" => "1", "rows" => "30", "sort" => "creation_date_index"}
   get "/api/orders" do
+    IO.inspect(@defaults)
     %{"page" => page, "rows" => rows, "q" => query, "sort" => sort} = Map.merge(@defaults, conn.params)
     IO.inspect(conn.params)
     case Server.Riak.search("orders", query, page, rows, sort) do

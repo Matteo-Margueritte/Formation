@@ -14,7 +14,7 @@ export var remoteProps = {
         console.log("remote props", props)
         // if(!props.user)
         //     return, user_id: props.user.value.id
-        const qs = {...props.qs, ...props.query}
+        const qs = {...props.qs}
         const query = Qs.stringify(qs)
         //console.log("query : ", query)
         return {

@@ -29,7 +29,7 @@ var cn = function() {
     return Object.keys(classes).map((k)=> classes[k] && k || '').join(' ')
 }
 
-var DeleteModal = createReactClass({
+var ConfirmationModal = createReactClass({
 
     handleNo(e) {
         e.preventDefault()
@@ -71,21 +71,22 @@ export var Layout = createReactClass({
     },
 
     getInitialState() {
-      return ({
-          modal: null,
-          loader: true
-      })
+        return ({
+            modal: null,
+            loader: true
+        })
     },
 
     loader(promise) {
         this.setState({loader: false})
-        return promise.then(() => this.setState({loader: true}))
+        return promise.finally(() => this.setState({loader: true}))
     },
 
     render() {
         var modal_component = {
-            'delete': (props) => <DeleteModal {...props}/>
+            'confirmation': (props) => <ConfirmationModal {...props}/>
         }[this.state.modal && this.state.modal.type];
+        console.log(this.state)
         modal_component = modal_component && modal_component(this.state.modal)
 
         var props = {
@@ -119,7 +120,29 @@ export var Header = createReactClass({
 })
 
 export var Order = createReactClass({
+    statics: {
+        remoteProps: [remoteProps.order]
+    },
+
+    handlePay(order) {
+        this.props.modal({
+            type: 'confirmation',
+            title: 'Order Payment',
+            message: `Are you sure you want pay this order ?`,
+            callback: (value)=>{
+                if (value === 1) {
+                    this.props.loader(HTTP.post("/api/order/process/process_payment", order)).then(_ => {
+                        this.props.Link.ReloadProps("order")
+                    }).catch(err => {
+                        console.error(err)
+                    })
+                }
+            }
+        })
+    },
+
     render() {
+        const order = this.props.order.value
         return (
             <JSXZ in="details" sel=".order">
                 <Z sel=".basic-div-block">
@@ -127,6 +150,12 @@ export var Order = createReactClass({
                 </Z>
                 <Z sel=".orderdetailwrapper">
                     <Child {...this.props}/>
+                </Z>
+                <Z sel=".orderstatus">
+                    {"Status : " + order.status.state}
+                </Z>
+                <Z sel=".orderprocess" onClick={(e) => {e.preventDefault(); this.handlePay(order)}}>
+                    <ChildrenZ/>
                 </Z>
             </JSXZ>
         )
@@ -137,6 +166,7 @@ export var OrderDetail = createReactClass({
     statics: {
         remoteProps: [remoteProps.order]
     },
+
 
     render() {
         var items = this.props.order.value.custom.items.map((item, index) => (
@@ -160,18 +190,14 @@ export var OrderDetail = createReactClass({
 
         return (
             <JSXZ in="details" sel=".columns-5">
-                <Z sel=".orderdetailcustomerdetail">
-                    <JSXZ in="details" sel=".div-block-4">
-                        <Z sel=".orderdetailorderid">
-                            {this.props.order.value.remoteid}
-                        </Z>
-                        <Z sel=".orderdetailaddress">
-                            {order.custom.billing_address.street.join() + " " + order.custom.billing_address.postcode + " " + order.custom.billing_address.city}
-                        </Z>
-                        <Z sel=".orderdetailclientname">
-                            {this.props.order.value.custom.customer.full_name}
-                        </Z>
-                    </JSXZ>
+                <Z sel=".orderdetailorderid">
+                    {order.remoteid}
+                </Z>
+                <Z sel=".orderdetailaddress">
+                    {order.custom.billing_address.street.join() + " " + order.custom.billing_address.postcode + " " + order.custom.billing_address.city}
+                </Z>
+                <Z sel=".orderdetailclientname">
+                    {order.custom.customer.full_name}
                 </Z>
                 <Z sel=".orderdetailitemsdetail">
                     <JSXZ in="details" sel=".columns-6">
@@ -198,22 +224,21 @@ export var Orders = createReactClass( {
 
     deleteModal(remoteid) {
         this.props.modal({
-            type: 'delete',
+            type: 'confirmation',
             title: 'Order deletion',
             message: `Are you sure you want to delete this ?`,
             callback: (value)=>{
                 if (value === 1) {
                     this.props.loader(HTTP.delete("/api/order/" + remoteid)).then(_ => {
-                        this.props.reloadProps("orders")
+                        this.props.Link.ReloadProps("orders")
                     })
                 }
             }
         })
     },
 
-    handleSubmit(event) {
-        this.props.reloadProps("orders", {q: this.state.searchInput === '' ? '*:*' : this.state.searchInput})
-        event.preventDefault()
+    handleSubmit() {
+        this.props.Link.GoTo("orders", [], {q: this.state.searchInput === '' ? '*:*' : this.state.searchInput})
     },
 
     handleInput(event) {
@@ -221,33 +246,35 @@ export var Orders = createReactClass( {
     },
 
     changePage(page) {
-        console.log(page)
-        this.props.reloadProps("orders", {q: this.state.searchInput === '' ? '*:*' : this.state.searchInput, page})
+        this.props.Link.GoTo("orders", [], {q: this.state.searchInput === '' ? '*:*' : this.state.searchInput, page})
     },
 
     render() {
         const result = this.props.orders.value.orders.map((order, index) =>
             (<JSXZ key={index} in="orders" sel=".columns-4">
-                <Z sel=".home-order-command-number">
-                    {order.remoteid}
-                </Z>
-                <Z sel=".home-order-customer">
-                    {order.custom.customer.full_name}
-                </Z>
-                <Z sel=".quantity">
-                    {order.custom.items.length}
-                </Z>
-                <Z sel=".home-order-address">
-                    {order.custom.billing_address.street.join() + " " + order.custom.billing_address.postcode + " " + order.custom.billing_address.city}
-                </Z>
-                <Z sel=".orderdetailbutton" href={"/order/" + order.id}>
-                    <ChildrenZ/>
-                </Z>
-                <Z sel=".orderpaybutton" onClick={(e) => {e.preventDefault(); this.deleteModal(order.id)}} href="">
-                    <ChildrenZ/>
-                </Z>
-            </JSXZ>
-        ))
+                    <Z sel=".home-order-command-number">
+                        {order.remoteid}
+                    </Z>
+                    <Z sel=".home-order-customer">
+                        {order.custom.customer.full_name}
+                    </Z>
+                    <Z sel=".quantity">
+                        {order.custom.items.length}
+                    </Z>
+                    <Z sel=".home-order-address">
+                        {order.custom.billing_address.street.join() + " " + order.custom.billing_address.postcode + " " + order.custom.billing_address.city}
+                    </Z>
+                    <Z sel=".orderdetailbutton" onClick={(e) => {e.preventDefault(); this.props.Link.GoTo("order", order.id, "")}}>
+                        <ChildrenZ/>
+                    </Z>
+                    <Z sel=".orderstatusdetail">
+                        {"Status : " + order.status.state}
+                    </Z>
+                    <Z sel=".orderpaybutton" onClick={(e) => {e.preventDefault(); this.deleteModal(order.id)}} href="">
+                        <ChildrenZ/>
+                    </Z>
+                </JSXZ>
+            ))
         let pagination = []
         for (let i = 0, p = 0; i < this.props.orders.value.numFound; i += 30) {
             pagination.push(
@@ -262,7 +289,7 @@ export var Orders = createReactClass( {
         return (
             <JSXZ in="orders" sel=".orders">
                 <Z sel=".div-block-2">
-                    <JSXZ in="orders" sel=".homesearchform" onSubmit={this.handleSubmit}>
+                    <JSXZ in="orders" sel=".homesearchform" onSubmit={(e) => {e.preventDefault(); this.handleSubmit()}}>
                         <Z sel=".homesearchfield" value={this.state.searchInput} onChange={this.handleInput}>
                         </Z>
                     </JSXZ>

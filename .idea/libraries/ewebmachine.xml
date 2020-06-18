@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="ewebmachine" type="mix">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/ewebmachine/ebin" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/ewebmachine/lib" />
+      <root url="file://$PROJECT_DIR$/deps/ewebmachine/priv" />
+    </SOURCES>
+  </library>
+</component>

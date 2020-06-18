@@ -9,6 +9,8 @@
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/cowboy" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/cowlib" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ewebmachine" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/exfsm" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/exos" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/mime" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/plug" />
@@ -16,6 +18,7 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/poolboy" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ranch" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/reaxt" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/rulex" />
       <excludeFolder url="file://$MODULE_DIR$/assets/node_modules/phoenix" />
       <excludeFolder url="file://$MODULE_DIR$/assets/node_modules/phoenix_html" />
       <excludeFolder url="file://$MODULE_DIR$/cover" />
@@ -48,5 +51,7 @@
     <orderEntry type="library" name="poolboy" level="project" />
     <orderEntry type="library" name="rulex" level="project" />
     <orderEntry type="library" name="exfsm" level="project" />
+    <orderEntry type="library" name="ewebmachine" level="project" />
+    <orderEntry type="library" name="dialyxir" level="project" />
   </component>
 </module>

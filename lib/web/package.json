@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "dependencies": {
     "cookie": "~0.1.2",
-    "qs": "~2.3.3",
+    "qs": "~6.2.4",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "webpack": "^3.12.0",
